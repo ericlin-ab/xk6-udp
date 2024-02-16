@@ -95,11 +95,11 @@ func (udp *UDP) ReadPktEx(conn net.Conn, seq int, size int) []byte {
 func (udp *UDP) Read(conn net.Conn, size int) ([]byte, error) {
 	buf := make([]byte, size)
 	conn.SetReadDeadline(time.Now().Add(DEADLINE))
-	_, err := conn.Read(buf)
+	length, err := conn.Read(buf)
 	if err != nil {
 		return nil, err
 	}
-	return buf, nil
+	return buf[0:length], nil
 }
 
 func (udp *UDP) WriteLn(conn net.Conn, data []byte) error {
